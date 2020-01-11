@@ -151,7 +151,7 @@ class App extends Component {
               {
                 rosters.map((team, idx) => {
                   return (
-                    <option value={idx}>{team[0].name}</option>
+                    <option key={idx} value={idx}>{team[0].name}</option>
                   )
                 })
               }
@@ -165,7 +165,7 @@ class App extends Component {
               {
                 rosters.map((team, idx) => {
                   return (
-                    <option value={idx}>{team[0].name}</option>
+                    <option key={idx} value={idx}>{team[0].name}</option>
                   )
                 })
               }
@@ -195,6 +195,7 @@ class App extends Component {
   // }
 
 
+  //QOL: don't let a team play against itself
   updateTeams = (homeBool) => {
     const rosterArr = this.state.rosters;
     if (homeBool) {
