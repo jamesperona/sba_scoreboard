@@ -12,7 +12,7 @@
 .FullBoard {
   background-color: #1e2e22;
   width: 95vw;
-  height: 68vh;
+  height: auto;
   margin-bottom: 1vmin;
   display: flex;
   flex-direction: column;
@@ -21,12 +21,28 @@
 
 .Input {
   background-color: #1e2e22;
-  height: 10vh;
+  height: 20vh;
   width: 95vw;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
   color: white;
+}
+
+.Selects {
+  display: flex;
+  justify-content: space-evenly;
+  width: 90vw;
+}
+
+.InfoDump {
+  overflow:auto;
+  background-color:white;
+  border: .2vmin solid black;
+  height: 8vw;
+  margin: 1vw;
+  width: 60vw;
 }
 
 .GameInfo {
@@ -94,8 +110,10 @@
 
 .HomeRoster {
   width: 47vw;
+  height: auto;
 }
 
 .AwayRoster {
   width: 47vw;
+  height: auto;
 }
