@@ -66,7 +66,7 @@ export default class Player extends Component {
             total: total+sign,
             fttotal: fttotal+sign,
             ftmakes: ftmakes+sign,
-            percentage: (100*(ftmakes+sign)/(fttotal+sign)).toFixed(0),
+            percentage: (fttotal+sign !== 0) ? (100*(ftmakes+sign)/(fttotal+sign)).toFixed(0) : 0,
             personalScore: personalScore+1*sign
         })
         if (this.props.home) {
@@ -95,7 +95,7 @@ export default class Player extends Component {
             total: total+sign,
             fttotal: fttotal+sign,
             ftmisses: ftmisses+sign,
-            percentage: (100*ftmakes/(fttotal+sign)).toFixed(0)
+            percentage: (fttotal+sign !== 0) ? (100*ftmakes/(fttotal+sign)).toFixed(0) : 0
         })
         this.props.totalUp(this.props.home, 0, sign);
     }
