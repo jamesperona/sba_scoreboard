@@ -20,6 +20,7 @@ class App extends Component {
     awayName : "N/A",
     homeTeam : [],
     awayTeam : [],
+    outData : [],
     rosters : [
       [{name: "Saint Bede Academy"}, {name: "Kaden Monterastelli", number: 2}, {name: "Braden Damerell", number: 5}, {name: "Logan Griggs", number: 10}, {name: "Gunnar Jauch", number: 13}, {name: "Nathan Potthoff", number: 14}, {name: "Logan Link", number: 22}, {name: "Maks Sharshekeev", number: 23}, {name: "Luke Story", number: 24}, {name: "Paul Hart", number: 30}, {name: "Nick Pearse", number: 31}, {name: "Duncan Lawler", number: 3}], 
       [{name: "Newman Central Catholic"}, {name: "N. Welty", number: 3}, {name: "L. Jungerman", number: 10}, {name: "E. Henkel", number: 11}, {name: "T. Powers", number: 11}, {name: "B. Newman", number: 12}, {name: "N. Britt", number: 13}, {name: "J. Ackman", number: 14}, {name: "G. Moran", number: 14}, {name: "C. Britt", number: 15}, {name: "S. Cheng", number: 20}, {name: "G. Koerner", number: 20}, {name: "C. McBride", number: 21}, {name: "G. Hunsberger", number: 22}, {name: "K. Brininger", number: 23}, {name: "A. Velasquez", number: 23}, {name: "K. Mullen", number: 24}, {name: "D. House", number: 30}, {name: "M. Williams", number: 32}, {name: "N. Neubauer", number: 42}],
@@ -45,6 +46,7 @@ class App extends Component {
       awayName,
       homeTeam,
       awayTeam,
+      outData,
       rosters
     } = this.state
 
@@ -173,7 +175,13 @@ class App extends Component {
           </div>
         </div>
         <div className="InfoDump">
-
+          {
+            outData.map((str, idx) => {
+              return (
+                <div>{str}</div>
+              )
+            })
+          }
         </div>
       </div>
     </div>
@@ -225,11 +233,13 @@ class App extends Component {
   }
 
   incrementQuarter = (positive, event) => {
-    const {quarter} = this.state;
+    const {quarter, outData, homeName, homeScore, awayName, awayScore} = this.state;
+    const quarterArr = ["1st", "2nd", "3rd", "4th", "Final"]
     event.preventDefault();
     if (positive && (quarter < 4)) {
       this.setState({
-        quarter: quarter+1
+        quarter: quarter+1,
+        outData: [...outData, `End of ${quarterArr[quarter]} quarter: ${homeName}: ${homeScore} | ${awayName}: ${awayScore}`]
       });
     }
     if (!positive && quarter > 0) {
