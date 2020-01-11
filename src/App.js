@@ -96,7 +96,7 @@ class App extends Component {
                   <th>{homeThrees}</th>
                   <th>{homeMakes}</th>
                   <th>{homeMisses}</th>
-                  <th>{homeMakes / (homeMisses+homeMakes)}</th>
+                  <th>{(homeMisses+homeMakes !== 0) ? (100 * homeMakes / (homeMisses+homeMakes)).toFixed(0) : 0}</th>
                 </tr>
               </tfoot>
 
@@ -134,7 +134,7 @@ class App extends Component {
                   <th>{awayThrees}</th>
                   <th>{awayMakes}</th>
                   <th>{awayMisses}</th>
-                  <th>{awayMakes / (awayMisses+awayMakes)}</th>
+                  <th>{(awayMisses+awayMakes !== 0) ? (100 * awayMakes / (awayMisses+awayMakes)).toFixed(0) : 0}</th>
                 </tr>
               </tfoot>
 
