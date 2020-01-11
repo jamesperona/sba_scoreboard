@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/sba_scoreboard/static/css/main.5bea1756.chunk.css",
+    "main.js": "/sba_scoreboard/static/js/main.e8b70b59.chunk.js",
+    "main.js.map": "/sba_scoreboard/static/js/main.e8b70b59.chunk.js.map",
+    "runtime-main.js": "/sba_scoreboard/static/js/runtime-main.d666c985.js",
+    "runtime-main.js.map": "/sba_scoreboard/static/js/runtime-main.d666c985.js.map",
+    "static/js/2.6ef25719.chunk.js": "/sba_scoreboard/static/js/2.6ef25719.chunk.js",
+    "static/js/2.6ef25719.chunk.js.map": "/sba_scoreboard/static/js/2.6ef25719.chunk.js.map",
+    "index.html": "/sba_scoreboard/index.html",
+    "precache-manifest.d44f719ac165d70c1508a0a86d26e601.js": "/sba_scoreboard/precache-manifest.d44f719ac165d70c1508a0a86d26e601.js",
+    "service-worker.js": "/sba_scoreboard/service-worker.js",
+    "static/css/main.5bea1756.chunk.css.map": "/sba_scoreboard/static/css/main.5bea1756.chunk.css.map",
+    "static/js/2.6ef25719.chunk.js.LICENSE": "/sba_scoreboard/static/js/2.6ef25719.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d666c985.js",
+    "static/js/2.6ef25719.chunk.js",
+    "static/css/main.5bea1756.chunk.css",
+    "static/js/main.e8b70b59.chunk.js"
+  ]
+}
