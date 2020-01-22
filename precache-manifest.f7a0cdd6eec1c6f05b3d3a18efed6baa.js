@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5c64e2084af9fb13176fed73871d1f57",
+    "revision": "cfedfd588886adb9fff65f19ba65c9b7",
     "url": "/sba_scoreboard/index.html"
   },
   {
-    "revision": "a5dfb966914477808e6e",
+    "revision": "f4fbbfc69b644f660f61",
     "url": "/sba_scoreboard/static/css/main.5bea1756.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sba_scoreboard/static/js/2.6ef25719.chunk.js.LICENSE"
   },
   {
-    "revision": "a5dfb966914477808e6e",
-    "url": "/sba_scoreboard/static/js/main.218a39ee.chunk.js"
+    "revision": "f4fbbfc69b644f660f61",
+    "url": "/sba_scoreboard/static/js/main.264098e1.chunk.js"
   },
   {
     "revision": "93d49dcd62fadc4f9f19",
