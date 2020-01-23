@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import Excel from 'exceljs'
 import './App.css';
-import Player from './components/PlayerStat.js'
+import Player from './components/PlayerStat.js';
+
+//TODO: pull rosters from editable csv/excel
+//TODO: push data to excel spreadsheet
+//TODO: ipad support
+
 
 class App extends Component {
   state = {
@@ -16,6 +21,8 @@ class App extends Component {
     homeMakes : 0,
     homeMisses : 0,
     quarter : 0,
+    quarterData : [],
+    quarterCurrent : {home : {}, away : {}},
     homeName : "N/A",
     awayName : "N/A",
     homeTeam : [],
@@ -88,7 +95,7 @@ class App extends Component {
                 {
                   homeTeam.map((player, idx) => {
                     return (
-                      <Player name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true}></Player>
+                      <Player key = {idx} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true}></Player>
                     )
                   })
                 }
@@ -126,7 +133,7 @@ class App extends Component {
                 {
                   awayTeam.map((player, idx) => {
                     return (
-                      <Player name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false}></Player>
+                      <Player key = {idx} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false}></Player>
                     )
                   })
                 }
@@ -195,7 +202,7 @@ class App extends Component {
   // componentDidMount = () => {
   //   let incomingRosters = []
   //   let workbook = new Excel.Workbook();
-  //   workbook.csv.readFile('rostersSheet.csv')
+  //   workbook.csv.readFile('rosters.csv')
   //     .then(function() {
   //       workbook.eachSheet(function(worksheet, sheetId) {
   //         incomingRosters[incomingRosters.length] = worksheet.name;
@@ -213,7 +220,6 @@ class App extends Component {
     if (homeBool) {
       let chosenRoster = rosterArr[document.getElementById("homeInput").value];
       let teamArr = chosenRoster.slice(1);
-      console.log(teamArr);
       let playersToSend = teamArr.map((playerElem) => {
         return playerElem;
       });
@@ -237,13 +243,24 @@ class App extends Component {
   }
 
   incrementQuarter = (positive, event) => {
-    const {quarter, outData, homeName, homeScore, awayName, awayScore} = this.state;
-    const quarterArr = ["1st", "2nd", "3rd", "4th", "Final"]
+    const {quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent} = this.state;
+    const quarterArr = ["1st", "2nd", "3rd", "4th", "Final"];
     event.preventDefault();
+
+    let homeInfo = [];
+    let awayInfo = [];
+    Object.keys(quarterCurrent.home).forEach((playerElem) => {
+      homeInfo.push(String.fromCharCode(160) + ` ${playerElem}: Makes - ${quarterCurrent.home[playerElem].makes}, Misses - ${quarterCurrent.home[playerElem].misses}, Twos - ${quarterCurrent.home[playerElem].twos}, Threes - ${quarterCurrent.home[playerElem].threes}, FT% - ${quarterCurrent.home[playerElem].makes/(quarterCurrent.home[playerElem].makes + quarterCurrent.home[playerElem].misses)}`)
+    })
+
+    Object.keys(quarterCurrent.away).forEach((playerElem) => {
+      awayInfo.push(String.fromCharCode(160) + ` ${playerElem}: Makes - ${quarterCurrent.away[playerElem].makes}, Misses - ${quarterCurrent.away[playerElem].misses}, Twos - ${quarterCurrent.away[playerElem].twos}, Threes - ${quarterCurrent.away[playerElem].threes}, FT% - ${quarterCurrent.away[playerElem].makes/(quarterCurrent.away[playerElem].makes + quarterCurrent.away[playerElem].misses)}`)
+    })
+
     if (positive && (quarter < 4)) {
       this.setState({
         quarter: quarter+1,
-        outData: [...outData, `End of ${quarterArr[quarter]} quarter: ${homeName}: ${homeScore} | ${awayName}: ${awayScore}`]
+        outData: outData.concat([`End of ${quarterArr[quarter]} quarter: ${homeName}: ${homeScore} | ${awayName}: ${awayScore}`, `Home:`, ], homeInfo, [`Away:`], awayInfo)
       });
     }
     if (!positive && quarter > 0) {
@@ -267,7 +284,7 @@ class App extends Component {
     });
   }
 
-  incrementTeamTotals = (home, value, sign) => {
+  incrementTeamTotals = (home, value, sign, name) => {
     const {
       homeMakes,
       homeMisses,
@@ -276,51 +293,171 @@ class App extends Component {
       awayMakes,
       awayMisses,
       awayTwos,
-      awayThrees
+      awayThrees,
+      quarterCurrent
     } = this.state;
+
+    let qtc = {}
+
     if (home) {
-      if (value === 0) {
-        this.setState({
-          homeMisses : homeMisses+sign
-        })
+
+      let currentUpdate = quarterCurrent;
+
+      if (!(name in quarterCurrent.home)) {
+        currentUpdate = {
+          ...quarterCurrent,
+          home: {
+            ...quarterCurrent.home,
+            [name] : {misses : 0, makes : 0, twos : 0, threes : 0}
+          }
+        };
       }
-      if (value === 1) {
-        this.setState({
-          homeMakes : homeMakes+sign
-        })
-      }
-      if (value === 2) {
-        this.setState({
-          homeTwos : homeTwos+sign
-        })
-      }
-      if (value === 3) {
-        this.setState({
-          homeThrees : homeThrees+sign
-        })
-      }
+
+      this.setState({
+        quarterCurrent : currentUpdate
+      }, () => {
+        qtc = this.state.quarterCurrent;
+        if (value === 0) {
+          this.setState({
+            homeMisses : homeMisses+sign,
+            quarterCurrent : {
+              ...qtc,
+              home: {
+                ...qtc.home,
+                [name] : {
+                  ...qtc.home[name],
+                  misses: qtc.home[name].misses + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 1) {
+          this.setState({
+            homeMakes : homeMakes+sign,
+            quarterCurrent : {
+              ...qtc,
+              home: {
+                ...qtc.home,
+                [name] : {
+                  ...qtc.home[name],
+                  makes: qtc.home[name].makes + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 2) {
+          this.setState({
+            homeTwos : homeTwos+sign,
+            quarterCurrent : {
+              ...qtc,
+              home: {
+                ...qtc.home,
+                [name] : {
+                  ...qtc.home[name],
+                  twos: qtc.home[name].twos + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 3) {
+          this.setState({
+            homeThrees : homeThrees+sign,
+            quarterCurrent : {
+              ...qtc,
+              home: {
+                ...qtc.home,
+                [name] : {
+                  ...qtc.home[name],
+                  threes: qtc.home[name].threes + 1
+                }
+              }
+            }
+          })
+        }
+      })
     }
     else {
-      if (value === 0) {
-        this.setState({
-          awayMisses : awayMisses+sign
-        })
+
+      let currentUpdate = quarterCurrent;
+
+      if (!(name in quarterCurrent.away)) {
+        currentUpdate = {
+          ...quarterCurrent,
+          away: {
+            ...quarterCurrent.away,
+            [name] : {misses : 0, makes : 0, twos : 0, threes : 0}
+          }
+        };
       }
-      if (value === 1) {
-        this.setState({
-          awayMakes : awayMakes+sign
-        })
-      }
-      if (value === 2) {
-        this.setState({
-          awayTwos : awayTwos+sign
-        })
-      }
-      if (value === 3) {
-        this.setState({
-          awayThrees : awayThrees+sign
-        })
-      }
+
+      this.setState({
+        quarterCurrent : currentUpdate
+      }, () => {
+        qtc = this.state.quarterCurrent;
+        if (value === 0) {
+          this.setState({
+            awayMisses : awayMisses+sign,
+            quarterCurrent : {
+              ...qtc,
+              away: {
+                ...qtc.away,
+                [name] : {
+                  ...qtc.away[name],
+                  misses: qtc.away[name].misses + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 1) {
+          this.setState({
+            awayMakes : awayMakes+sign,
+            quarterCurrent : {
+              ...qtc,
+              away: {
+                ...qtc.away,
+                [name] : {
+                  ...qtc.away[name],
+                  makes: qtc.away[name].makes + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 2) {
+          this.setState({
+            awayTwos : awayTwos+sign,
+            quarterCurrent : {
+              ...qtc,
+              away: {
+                ...qtc.away,
+                [name] : {
+                  ...qtc.away[name],
+                  twos: qtc.away[name].twos + 1
+                }
+              }
+            }
+          })
+        }
+        if (value === 3) {
+          this.setState({
+            awayThrees : awayThrees+sign,
+            quarterCurrent : {
+              ...qtc,
+              away: {
+                ...qtc.away,
+                [name] : {
+                  ...qtc.away[name],
+                  threes: qtc.away[name].threes + 1
+                }
+              }
+            }
+          })
+        }
+      })
     }
   }
 

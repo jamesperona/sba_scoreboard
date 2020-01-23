@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Excel from 'exceljs'
 import './PlayerStat.css';
 
-//TODO: score at end of quarter tracking
-//TODO: ability to "rewind" to what happened in prev quarters
 //TODO: dumping at end of quarter: a full summary of all players who had activity
 
 export default class Player extends Component {
@@ -74,7 +72,7 @@ export default class Player extends Component {
         } else {
             this.props.awayUp(1*sign);
         }
-        this.props.totalUp(this.props.home, 1, sign);
+        this.props.totalUp(this.props.home, 1, sign, this.props.name);
     }
 
     incrementFTMisses = (sign, event) => {
@@ -97,7 +95,7 @@ export default class Player extends Component {
             ftmisses: ftmisses+sign,
             percentage: (fttotal+sign !== 0) ? (100*ftmakes/(fttotal+sign)).toFixed(0) : 0
         })
-        this.props.totalUp(this.props.home, 0, sign);
+        this.props.totalUp(this.props.home, 0, sign, this.props.name);
     }
 
     incrementTwos = (sign, event) => {
@@ -123,7 +121,7 @@ export default class Player extends Component {
         } else {
             this.props.awayUp(2*sign);
         }
-        this.props.totalUp(this.props.home, 2, sign);
+        this.props.totalUp(this.props.home, 2, sign, this.props.name);
     }
 
     incrementThrees = (sign, event) => {
@@ -149,6 +147,6 @@ export default class Player extends Component {
         } else {
             this.props.awayUp(3*sign);
         }
-        this.props.totalUp(this.props.home, 3, sign);
+        this.props.totalUp(this.props.home, 3, sign, this.props.name);
     }
 }
