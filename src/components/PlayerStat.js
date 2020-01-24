@@ -66,7 +66,7 @@ export default class Player extends Component {
             ftmakes: ftmakes+sign,
             percentage: (fttotal+sign !== 0) ? (100*(ftmakes+sign)/(fttotal+sign)).toFixed(0) : 0,
             personalScore: personalScore+1*sign
-        })
+        })  
         if (this.props.home) {
             this.props.homeUp(1*sign);
         } else {

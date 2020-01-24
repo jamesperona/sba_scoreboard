@@ -47,6 +47,7 @@
   height: 8vw;
   margin: 1vw;
   width: 60vw;
+  white-space: pre;
 }
 
 .GameInfo {

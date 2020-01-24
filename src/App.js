@@ -189,7 +189,7 @@ class App extends Component {
           {
             outData.map((str, idx) => {
               return (
-                <div>{str}</div>
+                <div key={idx}>{str}</div>
               )
             })
           }
@@ -243,29 +243,36 @@ class App extends Component {
   }
 
   incrementQuarter = (positive, event) => {
-    const {quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent} = this.state;
+    const {quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent, quarterData} = this.state;
+    let stateQArr = this.state.quarterData;
     const quarterArr = ["1st", "2nd", "3rd", "4th", "Final"];
     event.preventDefault();
 
-    let homeInfo = [];
-    let awayInfo = [];
-    Object.keys(quarterCurrent.home).forEach((playerElem) => {
-      homeInfo.push(String.fromCharCode(160) + ` ${playerElem}: Makes - ${quarterCurrent.home[playerElem].makes}, Misses - ${quarterCurrent.home[playerElem].misses}, Twos - ${quarterCurrent.home[playerElem].twos}, Threes - ${quarterCurrent.home[playerElem].threes}, FT% - ${quarterCurrent.home[playerElem].makes/(quarterCurrent.home[playerElem].makes + quarterCurrent.home[playerElem].misses)}`)
-    })
-
-    Object.keys(quarterCurrent.away).forEach((playerElem) => {
-      awayInfo.push(String.fromCharCode(160) + ` ${playerElem}: Makes - ${quarterCurrent.away[playerElem].makes}, Misses - ${quarterCurrent.away[playerElem].misses}, Twos - ${quarterCurrent.away[playerElem].twos}, Threes - ${quarterCurrent.away[playerElem].threes}, FT% - ${quarterCurrent.away[playerElem].makes/(quarterCurrent.away[playerElem].makes + quarterCurrent.away[playerElem].misses)}`)
-    })
-
     if (positive && (quarter < 4)) {
+      let homeInfo = [];
+      let awayInfo = [];
+      Object.keys(quarterCurrent.home).forEach((playerElem) => {
+        homeInfo.push(String.fromCharCode(9) + ` ${playerElem}: Twos - ${quarterCurrent.home[playerElem].twos}, Threes - ${quarterCurrent.home[playerElem].threes}, Makes - ${quarterCurrent.home[playerElem].makes}, Misses - ${quarterCurrent.home[playerElem].misses}, FT% - ${quarterCurrent.home[playerElem].makes/(quarterCurrent.home[playerElem].makes + quarterCurrent.home[playerElem].misses)}`)
+      })
+  
+      Object.keys(quarterCurrent.away).forEach((playerElem) => {
+        awayInfo.push(String.fromCharCode(9) + ` ${playerElem}: Twos - ${quarterCurrent.away[playerElem].twos}, Threes - ${quarterCurrent.away[playerElem].threes}, Makes - ${quarterCurrent.away[playerElem].makes}, Misses - ${quarterCurrent.away[playerElem].misses}, FT% - ${quarterCurrent.away[playerElem].makes/(quarterCurrent.away[playerElem].makes + quarterCurrent.away[playerElem].misses)}`)
+      })
+      let headerStr = `End of ${quarterArr[quarter]} quarter: ${homeName}: ${homeScore} | ${awayName}: ${awayScore}`;
+      stateQArr[quarter+1] = quarterCurrent;
       this.setState({
         quarter: quarter+1,
-        outData: outData.concat([`End of ${quarterArr[quarter]} quarter: ${homeName}: ${homeScore} | ${awayName}: ${awayScore}`, `Home:`, ], homeInfo, [`Away:`], awayInfo)
+        outData: outData.concat([headerStr, `Home:`], homeInfo, [`Away:`], awayInfo),
+        quarterData: stateQArr,
+        quarterCurrent: {home: {}, away: {}}
       });
     }
     if (!positive && quarter > 0) {
+      stateQArr[quarter-1] = quarterCurrent;
       this.setState({
-        quarter: quarter-1
+        quarter: quarter-1,
+        quarterCurrent: quarterData[quarter-1],
+        quarterData: stateQArr
       });
     }
   }
