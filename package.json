@@ -1,14 +1,17 @@
 {
   "name": "scoreboard",
-  "homepage":"https://jamesperona.github.io/sba_scoreboard/",
+  "homepage": "https://jamesperona.github.io/sba_scoreboard/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "body-parser": "^1.19.0",
     "csv-parser": "^2.3.2",
     "exceljs": "^3.5.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.2",
     "node": "^13.5.0",
     "npm-windows-upgrade": "^6.0.1",
     "react": "^16.12.0",
@@ -19,6 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
+    "mongostart": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

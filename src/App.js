@@ -242,6 +242,9 @@ class App extends Component {
 
   }
 
+
+  //TODO: im aware of a """bug""" where if you advance the quarter, add points, backtrack the quarter, and then advance once more, the data dump handles it as if the point was scored within the quarter you backtracked to
+  //fixable, but annoying
   incrementQuarter = (positive, event) => {
     const {quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent, quarterData} = this.state;
     let stateQArr = this.state.quarterData;
