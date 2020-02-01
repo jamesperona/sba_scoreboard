@@ -5,9 +5,8 @@ import Player from './components/PlayerStat.js';
 
 //TODO: pull rosters from editable csv/excel
 //TODO: push data to excel spreadsheet
-//TODO: ipad support
-//TODO: leave twos and threes and total points, or just do total points ((datadump edits))
-//TODO: format text of datadump, bold the big team info and leave the player stats as is after implemeting above change
+//TODO: ipad support, slider skeleton is in place, logic not yet built at all and cosmetically still poor
+//TODO: format text of datadump, bold the big team info and leave the player stats as is after implementing cosmetic change
 
 class App extends Component {
   state = {
@@ -79,6 +78,10 @@ class App extends Component {
             <div className="QuarterCount" onClick={(event) => this.incrementQuarter(true, event)} onContextMenu={(event)=> this.incrementQuarter(false, event)}>{quarterArr[quarter]}</div>
             <div className="ScoreCounter">{awayScore}</div>
           </div>
+          {/* <label class="switch">
+            <input type="checkbox"></input>
+            <span class="slider round"></span>
+          </label> */}
         </div>
         <div className="Rosters">
           <div className="HomeRoster">
@@ -340,7 +343,7 @@ class App extends Component {
                 ...qtc.home,
                 [name] : {
                   ...qtc.home[name],
-                  misses: qtc.home[name].misses + 1
+                  misses: qtc.home[name].misses + sign
                 }
               }
             }
@@ -355,7 +358,7 @@ class App extends Component {
                 ...qtc.home,
                 [name] : {
                   ...qtc.home[name],
-                  makes: qtc.home[name].makes + 1
+                  makes: qtc.home[name].makes + sign
                 }
               }
             }
@@ -370,7 +373,7 @@ class App extends Component {
                 ...qtc.home,
                 [name] : {
                   ...qtc.home[name],
-                  twos: qtc.home[name].twos + 1
+                  twos: qtc.home[name].twos + sign
                 }
               }
             }
@@ -385,7 +388,7 @@ class App extends Component {
                 ...qtc.home,
                 [name] : {
                   ...qtc.home[name],
-                  threes: qtc.home[name].threes + 1
+                  threes: qtc.home[name].threes + sign
                 }
               }
             }
@@ -420,7 +423,7 @@ class App extends Component {
                 ...qtc.away,
                 [name] : {
                   ...qtc.away[name],
-                  misses: qtc.away[name].misses + 1
+                  misses: qtc.away[name].misses + sign
                 }
               }
             }
@@ -435,7 +438,7 @@ class App extends Component {
                 ...qtc.away,
                 [name] : {
                   ...qtc.away[name],
-                  makes: qtc.away[name].makes + 1
+                  makes: qtc.away[name].makes + sign
                 }
               }
             }
@@ -450,7 +453,7 @@ class App extends Component {
                 ...qtc.away,
                 [name] : {
                   ...qtc.away[name],
-                  twos: qtc.away[name].twos + 1
+                  twos: qtc.away[name].twos + sign
                 }
               }
             }
@@ -465,7 +468,7 @@ class App extends Component {
                 ...qtc.away,
                 [name] : {
                   ...qtc.away[name],
-                  threes: qtc.away[name].threes + 1
+                  threes: qtc.away[name].threes + sign
                 }
               }
             }
