@@ -13,11 +13,10 @@
     "@testing-library/user-event": "^7.2.1",
     "body-parser": "^1.19.0",
     "csv-parser": "^2.3.2",
-    "exceljs": "^3.5.0",
+    "exceljs": "^3.8.0",
     "express": "^4.17.1",
     "mongodb": "^3.5.2",
-    "node": "^13.5.0",
-    "npm-windows-upgrade": "^6.0.1",
+    "node": "^13.8.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0"
@@ -29,7 +28,9 @@
     "mongostart": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-prebuild": "npm i -f",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
