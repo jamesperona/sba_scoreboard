@@ -44,7 +44,7 @@ function handleError(res, reason, message, code) {
 app.get("/api/rosters", function(req, res) {
     db.collection(rosters).find({}).toArray(function(err, docs) {
         if (err) {
-          handleError(res, err.message, "Failed to get contacts.");
+          handleError(res, err.message, "Failed to get rosters.");
         } else {
           res.status(200).json(docs);
         }
