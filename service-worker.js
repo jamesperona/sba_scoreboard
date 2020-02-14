@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/sba_scoreboard/precache-manifest.d63a4ae967436fecd5012262a88d899f.js"
+  "/sba_scoreboard/precache-manifest.e52213454c094c255995755feecb9fd7.js"
 );
 
 self.addEventListener('message', (event) => {
