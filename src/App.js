@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Excel from 'exceljs'
 import './App.css';
 import Player from './components/PlayerStat.js';
+import axios from 'axios';
 
-//TODO: pull rosters from editable csv/excel
-//TODO: push data to excel spreadsheet
+//TODO: pull rosters from database
+//TODO: push game archive data to database
 //TODO: ipad support, slider skeleton is in place, logic not yet built at all and cosmetically still poor
 //TODO: format text of datadump, bold the big team info and leave the player stats as is after implementing cosmetic change
 
@@ -175,8 +175,8 @@ class App extends Component {
         <div className="Selects">
           <div>
             Home Team: &nbsp;
-            <select id={"homeInput"} onChange={(event) => this.updateTeams(true)}>
-              <option hidden disabled selected value> -- select a team -- </option>
+            <select defaultValue='default' id={"homeInput"} onChange={(event) => this.updateTeams(true)}>
+              <option hidden disabled value='default'> -- select a team -- </option>
               {
                 rosters.map((team, idx) => {
                   return (
@@ -189,8 +189,8 @@ class App extends Component {
 
           <div>
             Away Team: &nbsp;
-            <select id={"awayInput"} onChange={(event) => this.updateTeams(false)}>
-              <option hidden disabled selected value> -- select a team -- </option>
+            <select defaultValue='default' id={"awayInput"} onChange={(event) => this.updateTeams(false)}>
+              <option hidden disabled value='default'> -- select a team -- </option>
               {
                 rosters.map((team, idx) => {
                   return (
@@ -215,19 +215,11 @@ class App extends Component {
     );
   }
 
-  // componentDidMount = () => {
-  //   let incomingRosters = []
-  //   let workbook = new Excel.Workbook();
-  //   workbook.csv.readFile('rosters.csv')
-  //     .then(function() {
-  //       workbook.eachSheet(function(worksheet, sheetId) {
-  //         incomingRosters[incomingRosters.length] = worksheet.name;
-  //       });
-  //     });
-  //   this.setState({
-  //     rosters: incomingRosters
-  //   });
-  // }
+  componentDidMount = () => {
+    axios.get(`ds139334.mlab.com:39334/heroku_glcps0qt/rosters`).then(res => {
+      console.log(res);
+    });
+  }
 
 
   //QOL: don't let a team play against itself
@@ -259,7 +251,7 @@ class App extends Component {
   }
 
 
-  //TODO: im aware of a """bug""" where if you advance the quarter, add points, backtrack the quarter, and then advance once more, the data dump handles it as if the point was scored within the quarter you backtracked to
+  //TODO: im aware of a bug where if you advance the quarter, add points, backtrack the quarter, and then advance once more, the data dump handles it as if the point was scored within the quarter you backtracked to
   //fixable, but annoying
   incrementQuarter = (positive, event) => {
     const {quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent, quarterData} = this.state;

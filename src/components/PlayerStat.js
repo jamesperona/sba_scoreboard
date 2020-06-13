@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Excel from 'exceljs'
 import './PlayerStat.css';
 
 //TODO: dumping at end of quarter: a full summary of all players who had activity
