@@ -215,11 +215,11 @@ class App extends Component {
     );
   }
 
-  componentDidMount = () => {
-    axios.get(`ds139334.mlab.com:39334/heroku_glcps0qt/rosters`).then(res => {
-      console.log(res);
-    });
-  }
+  // componentDidMount = () => {
+  //   axios.get(`ds139334.mlab.com:39334/heroku_glcps0qt/rosters`).then(res => {
+  //     console.log(res);
+  //   });
+  // }
 
 
   //QOL: don't let a team play against itself
