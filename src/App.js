@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import Player from './components/PlayerStat.js';
+import Database from './components/DatabaseInput.js';
 import axios from 'axios';
 
 //TODO: pull rosters from database
 //TODO: push game archive data to database
-//TODO: ipad support, slider skeleton is in place, logic not yet built at all and cosmetically still poor
+//TODO: ipad support, slider formatting is (kinda) in place, didn't get it actually working yet though
 //TODO: format text of datadump, bold the big team info and leave the player stats as is after implementing cosmetic change
+
+const url = 'http://localhost:8080/api'
 
 class App extends Component {
   state = {
@@ -211,16 +214,16 @@ class App extends Component {
           }
         </div>
       </div>
+      <Database></Database>
     </div>
     );
   }
 
-  // componentDidMount = () => {
-  //   axios.get(`ds139334.mlab.com:39334/heroku_glcps0qt/rosters`).then(res => {
-  //     console.log(res);
-  //   });
-  // }
-
+  componentDidMount = () => {
+    axios.get(`${url}/rosters`).then(res => {
+      console.log(res);
+    });
+  }
 
   //QOL: don't let a team play against itself
   updateTeams = (homeBool) => {
@@ -277,8 +280,7 @@ class App extends Component {
         quarterData: stateQArr,
         quarterCurrent: {home: {}, away: {}}
       });
-    }
-    if (!positive && quarter > 0) {
+    } else if (!positive && quarter > 0) {
       stateQArr[quarter-1] = quarterCurrent;
       this.setState({
         quarter: quarter-1,

@@ -5,7 +5,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -23,6 +23,7 @@
   background-color: #1e2e22;
   height: 20vh;
   width: 95vw;
+  padding: 1vmin;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

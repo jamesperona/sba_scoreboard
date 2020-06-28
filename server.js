@@ -56,5 +56,46 @@ app.get("/api/rosters", function(req, res) {
   });
 });
 
+app.get("/api/players", function(req, res) {
+  db.collection("players").find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get players.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/players", function(req, res) {
+  var newContact = req.body;
+  newContact.createDate = new Date();
+
+  if (!req.body.name || !req.body.number) {
+    handleError(res, "Invalid user input", "Must provide a name and number.", 400);
+  } else {
+    db.collection("players").insertOne(newContact, function(err, doc) {
+      if (err) {
+        handleError(res, err.message, "Failed to add player.");
+      } else {
+        res.status(201).json(doc.ops[0]);
+      }
+    });
+  }
+});
+
 app.post("/api/rosters", function(req, res) {
+  var newContact = req.body;
+  newContact.createDate = new Date();
+
+  if (!req.body.name) {
+    handleError(res, "Invalid user input", "Must provide a team name.", 400);
+  } else {
+    db.collection("rosters").insertOne(newContact, function(err, doc) {
+      if (err) {
+        handleError(res, err.message, "Failed to add roster.");
+      } else {
+        res.status(201).json(doc.ops[0]);
+      }
+    });
+  }
 });
