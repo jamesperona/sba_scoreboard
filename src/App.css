@@ -21,8 +21,6 @@
 
 .Input {
   background-color: #1e2e22;
-  height: 20vh;
-  width: 95vw;
   padding: 1vmin;
   display: flex;
   justify-content: space-evenly;

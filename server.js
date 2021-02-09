@@ -66,6 +66,39 @@ app.get("/api/players", function(req, res) {
   });
 });
 
+app.get("/api/livegame", function(req, res) {
+  db.collection("livegame").find({ dateInfo: { $eq: req.body.dateInfo} }, function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get livegame data.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/livegame", function(req, res) {
+  var livegamePost = req.body;
+  newContact.createDate = new Date();
+
+  db.collection("livegame").insertOne(livegamePost, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to add livegame data.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.put("/api/livegame", function(req, res) {
+  db.collection("livegame").update({ dateInfo: { $eq: req.body.dateInfo} }, req.body, {upsert: true}, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update livegame data, likely a connection error.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
 app.post("/api/players", function(req, res) {
   var newContact = req.body;
   newContact.createDate = new Date();

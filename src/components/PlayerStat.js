@@ -53,6 +53,10 @@ export default class Player extends Component {
             fttotal
         } = this.state;
 
+        if (!this.props.controller) {
+            return;
+        }
+
         event.preventDefault();
 
         if (sign === -1 && ftmakes === 0) {
@@ -81,6 +85,10 @@ export default class Player extends Component {
             ftmisses,
             fttotal
         } = this.state;
+
+        if (!this.props.controller) {
+            return;
+        }
         
         event.preventDefault();
 
@@ -103,6 +111,10 @@ export default class Player extends Component {
             twomakes,
             personalScore
         } = this.state;
+
+        if (!this.props.controller) {
+            return;
+        }
 
         event.preventDefault();
 
@@ -129,6 +141,10 @@ export default class Player extends Component {
             threemakes,
             personalScore
         } = this.state;
+
+        if (!this.props.controller) {
+            return;
+        }
 
         event.preventDefault();
 
