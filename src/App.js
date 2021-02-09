@@ -249,11 +249,11 @@ class App extends Component {
   // with a matching "dateInfo" param, updating if found, posting new if not
   sendLivegame = () => {
     console.log("sending livegame");
-    if (this.state.dateInfo !== "") {
-      axios.put(`${url}/livegame`, this.state);
-    } else {
-      axios.post(`${url}/livegame`, this.state)
-    }
+    // if (this.state.dateInfo !== "") {
+    //   axios.put(`${url}/livegame`, this.state);
+    // } else {
+    //   axios.post(`${url}/livegame`, this.state)
+    // }
   }
 
   recieveLivegame = () => {
