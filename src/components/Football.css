@@ -1,0 +1,27 @@
+.ButtonRow {
+    width: 100vw;
+    border-top: solid 1pt white;
+    border-bottom: solid 1pt white;
+    background-color:#444444;
+}
+
+.FootballButton {
+    border:1px solid black;
+    padding: 1vw;
+    margin:.5vw;
+}
+
+.FootballButton:hover {
+    background-color: #aaaaaa;
+}
+
+.FootballButton:active {
+    background-color: #666666;
+}
+
+.FootballInput {
+    border:1px solid black;
+    padding: 1vw;
+    margin:.5vw;
+
+}

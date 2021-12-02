@@ -1,0 +1,49 @@
+
+.DatabaseBox {
+    padding: 1vmin;
+    display: flex;
+    border: 2px solid #18201a;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+    color: white;
+  }
+  
+  .DatabaseTitle {
+    font-size: 2vmin;
+  }
+  
+  .DatabaseInput {
+    background-color: #1e2e22;
+    height: 20vh;
+    width: 95vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+    color: white;
+  }
+  
+  .InputItem {
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  .TabSelector {
+    display: flex;
+    width: 100%;
+    background-color: #18201a;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+  }
+  
+  .TabButton {
+    border-style: 2px solid white;
+    color: white;
+    background-color: #0c1a11;
+    padding: 4px;
+  }
