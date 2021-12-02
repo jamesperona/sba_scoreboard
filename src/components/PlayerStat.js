@@ -45,6 +45,10 @@ export default class Player extends Component {
         );
     }
 
+    componentDidMount = () => {
+        this.setState(this.props.initial || {});
+    }
+
     incrementFTMakes = (sign, event) => {
         const{
             total,
@@ -76,6 +80,8 @@ export default class Player extends Component {
             this.props.awayUp(1*sign);
         }
         this.props.totalUp(this.props.home, 1, sign, this.props.name);
+        const data_to_send = this.state;
+        this.props.callback(data_to_send);
     }
 
     incrementFTMisses = (sign, event) => {
@@ -103,6 +109,8 @@ export default class Player extends Component {
             percentage: (fttotal+sign !== 0) ? (100*ftmakes/(fttotal+sign)).toFixed(0) : 0
         })
         this.props.totalUp(this.props.home, 0, sign, this.props.name);
+        const data_to_send = this.state;
+        this.props.callback(data_to_send);
     }
 
     incrementTwos = (sign, event) => {
@@ -133,6 +141,8 @@ export default class Player extends Component {
             this.props.awayUp(2*sign);
         }
         this.props.totalUp(this.props.home, 2, sign, this.props.name);
+        const data_to_send = this.state;
+        this.props.callback(data_to_send);
     }
 
     incrementThrees = (sign, event) => {
@@ -163,5 +173,7 @@ export default class Player extends Component {
             this.props.awayUp(3*sign);
         }
         this.props.totalUp(this.props.home, 3, sign, this.props.name);
+        const data_to_send = this.state;
+        this.props.callback(data_to_send);
     }
 }
