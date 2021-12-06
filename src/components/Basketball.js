@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Basketball.css';
 import Player from './PlayerStat.js';
 import Database from './DatabaseInput.js';
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 
@@ -128,7 +128,7 @@ export default class Basketball extends Component {
                         {
                           homeTeam.map((player, idx) => {
                             return (
-                              <Player key = {idx} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
                             )
                           })
                         }
@@ -166,7 +166,7 @@ export default class Basketball extends Component {
                         {
                           awayTeam.map((player, idx) => {
                             return (
-                              <Player key = {idx} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
                             )
                           })
                         }
@@ -267,15 +267,22 @@ export default class Basketball extends Component {
 
       componentDidMount = async () => {
         let livegameArray = [];
-        const livegameCollection = collection(db, "gamestates");
-        const q = query(livegameCollection, where("date", "!=", ""));
-        
+        const q = query(collection(db, "gamestates"), where("date", "!=", ""));
+
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           livegameArray.push(doc.id);
         });
-
         this.setState({availableLivegames : livegameArray});
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          livegameArray = [];
+          querySnapshot.forEach((doc) => {
+            livegameArray.push(doc.id);
+          });
+          this.setState({availableLivegames : livegameArray});
+        });
+
+        
       }
     
       sendLivegame = async () => {
@@ -316,6 +323,14 @@ export default class Basketball extends Component {
         getDoc(livegame_doc_ref).then((result) => {
           this.setState(result.data().state);
         });
+        
+        onSnapshot(doc(db, 'gamestates/' + this.state.livegameToLoad), (doc) => {
+          const copy = {...doc.data().state};
+          console.log('new data recieved');
+          console.log(copy);
+          this.setState(copy);
+        });
+
       }
     
       responseGoogle = (response) => {

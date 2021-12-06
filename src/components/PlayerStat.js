@@ -73,6 +73,9 @@ export default class Player extends Component {
             ftmakes: ftmakes+sign,
             percentage: (fttotal+sign !== 0) ? (100*(ftmakes+sign)/(fttotal+sign)).toFixed(0) : 0,
             personalScore: personalScore+1*sign
+        }, () => {
+            const data_to_send = this.state;
+            this.props.callback(data_to_send);
         })  
         if (this.props.home) {
             this.props.homeUp(1*sign);
@@ -80,8 +83,6 @@ export default class Player extends Component {
             this.props.awayUp(1*sign);
         }
         this.props.totalUp(this.props.home, 1, sign, this.props.name);
-        const data_to_send = this.state;
-        this.props.callback(data_to_send);
     }
 
     incrementFTMisses = (sign, event) => {
@@ -107,10 +108,11 @@ export default class Player extends Component {
             fttotal: fttotal+sign,
             ftmisses: ftmisses+sign,
             percentage: (fttotal+sign !== 0) ? (100*ftmakes/(fttotal+sign)).toFixed(0) : 0
+        }, () => {
+            const data_to_send = this.state;
+            this.props.callback(data_to_send);
         })
         this.props.totalUp(this.props.home, 0, sign, this.props.name);
-        const data_to_send = this.state;
-        this.props.callback(data_to_send);
     }
 
     incrementTwos = (sign, event) => {
@@ -134,6 +136,9 @@ export default class Player extends Component {
             total: total+sign,
             twomakes: twomakes+sign,
             personalScore: personalScore+2*sign
+        }, () => {
+            const data_to_send = this.state;
+            this.props.callback(data_to_send);
         })
         if (this.props.home) {
             this.props.homeUp(2*sign);
@@ -141,8 +146,6 @@ export default class Player extends Component {
             this.props.awayUp(2*sign);
         }
         this.props.totalUp(this.props.home, 2, sign, this.props.name);
-        const data_to_send = this.state;
-        this.props.callback(data_to_send);
     }
 
     incrementThrees = (sign, event) => {
@@ -166,6 +169,9 @@ export default class Player extends Component {
             total: total+sign,
             threemakes: threemakes+sign,
             personalScore: personalScore+3*sign
+        }, () => {
+            const data_to_send = this.state;
+            this.props.callback(data_to_send);
         })
         if (this.props.home) {
             this.props.homeUp(3*sign);
@@ -173,7 +179,5 @@ export default class Player extends Component {
             this.props.awayUp(3*sign);
         }
         this.props.totalUp(this.props.home, 3, sign, this.props.name);
-        const data_to_send = this.state;
-        this.props.callback(data_to_send);
     }
 }
