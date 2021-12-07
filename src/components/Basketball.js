@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './Basketball.css';
 import Player from './PlayerStat.js';
-import Database from './DatabaseInput.js';
+// import Database from './DatabaseInput.js';
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
+import GoogleLogin from 'react-google-login';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJ4H3HkWi5jJt8JShN0W1i_uDW6M8inP4",
@@ -67,7 +69,9 @@ export default class Basketball extends Component {
           [{name: "Putnam County"}, {name: "Jacob Williams", number: 1}, {name: "Luke Pederson", number: 2}, {name: "Jacob Wiesbrock", number: 3}, {name: "Jakob Pyszka", number: 4}, {name: "Matthew Liebhart", number: 5}, {name: "Luke Olson", number: 10}, {name: "Stephen Mecagni", number: 12}, {name: "Nick Mattern", number: 14}, {name: "Adam Currie", number: 15}, {name: "Drake Smith", number: 21}, {name: "Jackson McDonald", number: 23}, {name: "Peyton Williams", number: 24}],
           [{name: "Midland"}, {name: "Brady Hattan", number: 1}, {name: "Riley McFadden", number: 2}, {name: "Brad Weber", number: 3}, {name: "Brett Smith", number: 10}, {name: "Riccardo Rizzi", number: 12}, {name: "Will Meliska", number: 21}, {name: "Brandon Collins", number: 23}, {name: "Ryan Bella", number: 24}, {name: "Ryan Bigger", number: 32}, {name: "Billy Poignant", number: 33}, {name: "Ryan Riddell", number: 34}, {name: "David Rosa", number: 35}, {name: "Matt Shreffler", number: 40}, {name: "Hunter Benson", number: 43}],
           [{name: "GSW"}, {name: "Ty Johnson", number: 2}, {name: "Caydan Landry", number: 3}, {name: "Chris Ruiz", number: 5}, {name: "Nolan Perkins", number: 12}, {name: "Kevin Ferrari", number: 15}, {name: "Riley Morris", number: 20}, {name: "Dylan Hill", number: 21}, {name: "Nate Wise", number: 23}, {name: "Donovan Garcia", number: 24}, {name: "Michael Ashley", number: 25}, {name: "Brandon States", number: 32}, {name: "Chris Bexson", number: 33}, {name: "Aaron Tramutolo", number: 34}, {name: "Conner Steichen", number: 35}], 
-          [{name: "Bureau Valley Girls"}, {name: "Kam Kolb", number: 1}, {name: "Lexi Marquez", number: 2}, {name: "Paige Wagner", number: 11}, {name: "Kyra Stoller", number: 14}, {name: "Jennifer Etheridge", number: 20}, {name: "Kaleen Carlson", number: 22}, {name: "Aspen Balensiefen", number: 23}, {name: "Ashley Nordstrom", number: 24}, {name: "Jaimie Schutz", number: 30}, {name: "Madison Dye", number: 34}]]
+          [{name: "Bureau Valley Girls"}, {name: "Kam Kolb", number: 1}, {name: "Lexi Marquez", number: 2}, {name: "Paige Wagner", number: 11}, {name: "Kyra Stoller", number: 14}, {name: "Jennifer Etheridge", number: 20}, {name: "Kaleen Carlson", number: 22}, {name: "Aspen Balensiefen", number: 23}, {name: "Ashley Nordstrom", number: 24}, {name: "Jaimie Schutz", number: 30}, {name: "Madison Dye", number: 34}],
+          [{name: "Iowa Hawkeyes"}, {name: "Filip Rebraca", number: 0}, {name: "Joe Toussaint", number: 2}, {name: "Jordan Bohannon", number: 3}, {name: "Ahron Ulis", number: 4}, {name: "Tony Perkins", number: 11}, {name: "Austin Ash", number: 13}, {name: "Carter Kingsbury", number: 14}, {name: "Keegan Murray", number: 15}, {name: "Payton Sandfort", number: 20}, {name: "Patrick McCaffery", number: 22}, {name: "Josh Ogundele", number: 23}, {name: "Kris Murray", number: 24}, {name: "Luc Laketa", number: 25}, {name: "Connor McCaffery", number: 30}, {name: "Riley Mulvey", number: 44}],
+          [{name: "Fighting Illini"}, {name: "Brandin Podziemski", number: 0}, {name: "Trent Frazier", number: 1}, {name: "Connor Serven", number: 2}, {name: "Jacob Grandison", number: 3}, {name: "Omar Payne", number: 4}, {name: "Andre Curbelo", number: 5}, {name: "Luke Goode", number: 10}, {name: "Alfonso Plummer", number: 11}, {name: "Brandon Lieb", number: 12}, {name: "Benjamin Bosmans-Verdonk", number: 13}, {name: "RJ Melendez", number: 15}, {name: "Da'Monte Wliliams", number: 20}, {name: "Kofi Cockburn", number: 21}, {name: "Austin Hutcherson", number: 22}, {name: "Coleman Hawkins", number: 33}]]
       }
     
     
@@ -255,7 +259,14 @@ export default class Basketball extends Component {
                   );
                 }
               })()}
+              
+              <GoogleLogin clientId="132558249658-kt77ea389dsq23bmopt998l53ed6rlni.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={(response) => this.responseGoogle(response)}
+                    onFailure={(response) => this.responseGoogle(response)}
+                    cookiePolicy={'single_host_origin'}/>
             </div>
+            
         );
       }
     
@@ -301,6 +312,9 @@ export default class Basketball extends Component {
         delete state_copy.rosters;
         delete state_copy.quarterCurrent;
         delete state_copy.availableLivegames;
+        delete state_copy.quarterData;
+        console.log(current_game_id);
+        console.log(state_copy);
 
         await setDoc(doc(db, "gamestates", current_game_id), {
           date: date,
@@ -328,9 +342,10 @@ export default class Basketball extends Component {
       }
     
       responseGoogle = (response) => {
-        if (response.Rs.Ct === "j@mesperona.com") {
-          alert("Authentication Success");
-          this.setState({isAuth : true});
+        console.log(response);
+        if(response.vu.jv === "j@mesperona.com") {
+          alert("Authentication Successful");
+          this.setState({isAuth: true});
         } else {
           alert("Improper Authentication");
         }

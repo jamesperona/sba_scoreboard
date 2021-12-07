@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Basketball from './components/Basketball.js';
-import Football from './components/Football.js';
-import Firebase from './components/Firebase.js';
-import GoogleLogin from 'react-google-login';
+// import Football from './components/Football.js';
+// import Firebase from './components/Firebase.js';
 
 //TODO: pull rosters from database
 //TODO: push game archive data to database
@@ -17,30 +16,25 @@ class App extends Component {
   }
 
   render() {
-    const{
-      isAuth,
-    } = this.state;
+    // const{
+    //   isAuth,
+    // } = this.state;
 
     return (
       <>
       <div className="App">
         <Router>
           <div className="RouteHolder">
-            <Route path='/sba_scoreboard'>
+            {/* <Route path='/sba_scoreboard'>
               <ul>
-                <li><Link to='/sba_scoreboard/basketball'>Basketball</Link></li> 
-                {/* <li><Link to='/sba_scoreboard/football'>Football</Link></li> */}
+                <li><Link to='/'>Basketball</Link></li> 
+                <li><Link to='/sba_scoreboard/football'>Football</Link></li>
               </ul>
-            </Route>
-            <Route path='/sba_scoreboard/basketball' component={Basketball}/>
+            </Route> */}
+            <Route path='/' component={Basketball}/>
             {/* <Route path='/sba_scoreboard/football' component ={Football}/> */}
           </div>
         </Router>
-        <GoogleLogin clientId="132558249658-kt77ea389dsq23bmopt998l53ed6rlni.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={(response) => this.responseGoogle(response)}
-                    onFailure={(response) => this.responseGoogle(response)}
-                    cookiePolicy={'single_host_origin'}/>
       </div>
       </>
         
@@ -52,12 +46,7 @@ class App extends Component {
 
 
   responseGoogle = (response) => {
-    if (response.Rs.Ct === "j@mesperona.com") {
-      alert("Authentication Success");
-      this.setState({isAuth : true});
-    } else {
-      alert("Improper Authentication");
-    }
+    console.log(response);
   }
 }
 
