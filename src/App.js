@@ -36,7 +36,7 @@ class App extends Component {
             {/* <Route path='/sba_scoreboard/football' component ={Football}/> */}
           </div>
         </Router>
-        <GoogleLogin clientId="679888380619-6k6qu0ms1dnjm4rc5blpi3j99a670sgd.apps.googleusercontent.com"
+        <GoogleLogin clientId="132558249658-kt77ea389dsq23bmopt998l53ed6rlni.apps.googleusercontent.com"
                     buttonText="Login"
                     onSuccess={(response) => this.responseGoogle(response)}
                     onFailure={(response) => this.responseGoogle(response)}
