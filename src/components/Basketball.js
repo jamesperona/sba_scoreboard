@@ -25,6 +25,8 @@ const db = getFirestore(app);
 
 export default class Basketball extends Component {
     state = {
+        unsubFromGamelist : function() {return;},
+        unsubFromLivegame : function() {return;},
         isAuth : false,
         homeScore : 0,
         awayScore : 0,
@@ -295,8 +297,7 @@ export default class Basketball extends Component {
           });
           this.setState({availableLivegames : livegameArray});
         });
-
-        
+        this.setState({unsubFromGamelist: unsubscribe});
       }
     
       sendLivegame = async () => {
@@ -313,8 +314,10 @@ export default class Basketball extends Component {
         delete state_copy.quarterCurrent;
         delete state_copy.availableLivegames;
         delete state_copy.quarterData;
-        console.log(current_game_id);
-        console.log(state_copy);
+        delete state_copy.unsubFromLivegame;
+        delete state_copy.unsubFromGamelist;
+        // console.log(current_game_id);
+        // console.log(state_copy);
 
         await setDoc(doc(db, "gamestates", current_game_id), {
           date: date,
@@ -332,20 +335,22 @@ export default class Basketball extends Component {
           this.setState(result.data().state);
         });
         
-        onSnapshot(doc(db, 'gamestates/' + this.state.livegameToLoad), (doc) => {
+        const unsubscribe = onSnapshot(doc(db, 'gamestates/' + this.state.livegameToLoad), (doc) => {
           const copy = {...doc.data().state};
           console.log('new data recieved');
-          console.log(copy);
+          // console.log(copy);
           this.setState(copy);
         });
+        this.setState({unsubFromLivegame: unsubscribe});
 
       }
     
       responseGoogle = (response) => {
-        console.log(response);
+        // console.log(response);
         if(response.vu.jv === "j@mesperona.com") {
           alert("Authentication Successful");
           this.setState({isAuth: true});
+          this.state.unsubFromGamelist();
         } else {
           alert("Improper Authentication");
         }
@@ -361,9 +366,11 @@ export default class Basketball extends Component {
           awayArr[idx].data = new_data;
           this.setState({awayTeam : awayArr});
         }
+        
       }
     
       updateLivegameSelect = () => {
+        this.state.unsubFromLivegame();
         let chosenLivegame = this.state.availableLivegames[document.getElementById("livegameInput").value];
         this.setState({livegameToLoad: chosenLivegame}, () => {
           this.recieveLivegame();
@@ -372,9 +379,10 @@ export default class Basketball extends Component {
 
       //QOL: don't let a team play against itself
       updateTeams = (homeBool) => {
+        let chosenRoster = "";
         const rosterArr = this.state.rosters;
         if (homeBool) {
-          let chosenRoster = rosterArr[document.getElementById("homeInput").value];
+          chosenRoster = rosterArr[document.getElementById("homeInput").value];
           let teamArr = chosenRoster.slice(1);
           let playersToSend = teamArr.map((playerElem) => {
             return playerElem;
@@ -384,7 +392,7 @@ export default class Basketball extends Component {
             homeName: chosenRoster[0].name
           });
         } else {
-          let chosenRoster = rosterArr[document.getElementById("awayInput").value];
+          chosenRoster = rosterArr[document.getElementById("awayInput").value];
           let teamArr = chosenRoster.slice(1);
           let playersToSend = teamArr.map((playerElem) => {
             return playerElem;
@@ -394,6 +402,22 @@ export default class Basketball extends Component {
             awayName: chosenRoster[0].name
           });
         } 
+        // if((this.state.homeName !== "Not Selected" && !homeBool) || (this.state.awayName !== "Not Selected" && homeBool)) {
+        //   console.log("trying to find previous state");
+        //   let date = new Date();
+        //   let current_game_id = "";
+        //   if (homeBool) {
+        //     current_game_id = chosenRoster[0].name + " vs. " + this.state.awayName + " on " + date.toDateString();
+        //   } else {
+        //     current_game_id = this.state.homeName + " vs. " + chosenRoster[0].name + " on " + date.toDateString();
+        //   }
+        //   getDoc(current_game_id).then((result) => {
+        //     if(result.exists()) {
+        //       console.log(result.data());
+        //       this.setState(result.data().state);
+        //     }
+        //   });
+        // }  
       }
     
     
