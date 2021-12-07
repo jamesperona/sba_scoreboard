@@ -6,6 +6,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } 
 import { onSnapshot } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import GoogleLogin from 'react-google-login';
+import { getDefaultNormalizer } from '@testing-library/dom';
 
 
 const firebaseConfig = {
@@ -347,7 +348,7 @@ export default class Basketball extends Component {
     
       responseGoogle = (response) => {
         // console.log(response);
-        if(response.vu.jv === "j@mesperona.com") {
+        if(response.vu.jv === "j@mesperona.com" || response.vu.jv === "jimaperona@gmail.com") {
           alert("Authentication Successful");
           this.setState({isAuth: true});
           this.state.unsubFromGamelist();
