@@ -42,6 +42,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    document.title = "SBA Scoreboard"
   }
 
 
