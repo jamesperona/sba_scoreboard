@@ -23,7 +23,7 @@ const db = getFirestore(app);
 
 export default class Basketball extends Component {
     state = {
-        isAuth : true,
+        isAuth : false,
         homeScore : 0,
         awayScore : 0,
         awayThrees : 0,
