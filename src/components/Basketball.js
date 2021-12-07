@@ -23,7 +23,7 @@ const db = getFirestore(app);
 
 export default class Basketball extends Component {
     state = {
-        isAuth : false,
+        isAuth : true,
         homeScore : 0,
         awayScore : 0,
         awayThrees : 0,
@@ -128,7 +128,7 @@ export default class Basketball extends Component {
                         {
                           homeTeam.map((player, idx) => {
                             return (
-                              <Player key = {player.name+Object.entries(player.data).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
                             )
                           })
                         }
@@ -166,7 +166,7 @@ export default class Basketball extends Component {
                         {
                           awayTeam.map((player, idx) => {
                             return (
-                              <Player key = {player.name+Object.entries(player.data).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
                             )
                           })
                         }
@@ -232,7 +232,7 @@ export default class Basketball extends Component {
                         }
                       </div>
                       <div>
-                      <Database></Database>
+                      {/* <Database></Database> */}
                       </div>
                     </div>
                   );
@@ -266,6 +266,9 @@ export default class Basketball extends Component {
       }
 
       componentDidMount = async () => {
+        if(this.state.isAuth) {
+          return;
+        }
         let livegameArray = [];
         const q = query(collection(db, "gamestates"), where("date", "!=", ""));
 
@@ -287,6 +290,8 @@ export default class Basketball extends Component {
     
       sendLivegame = async () => {
 
+        console.log('updating livegame');
+
         let date = new Date();
         const current_game_id = this.state.homeName + " vs. " + this.state.awayName + " on " + date.toDateString();
 
@@ -305,20 +310,9 @@ export default class Basketball extends Component {
     
       recieveLivegame = () => {
 
-        // const q = query(collection(db, "gamestates"), where("state", "==", "CA"));
-        // const unsubscribe = onSnapshot(q, (snapshot) => {
-        //   snapshot.docChanges().forEach((change) => {
-        //     if (change.type === "added") {
-        //         console.log("New city: ", change.doc.data());
-        //     }
-        //     if (change.type === "modified") {
-        //         console.log("Modified city: ", change.doc.data());
-        //     }
-        //     if (change.type === "removed") {
-        //         console.log("Removed city: ", change.doc.data());
-        //     }
-        //   });
-        // });
+        if (this.state.isAuth) {
+          return;
+        }
         const livegame_doc_ref = doc(db, 'gamestates/' + this.state.livegameToLoad);
         getDoc(livegame_doc_ref).then((result) => {
           this.setState(result.data().state);
