@@ -348,8 +348,8 @@ export default class Basketball extends Component {
       }
     
       responseGoogle = (response) => {
-        // console.log(response);
-        if(response.vu.jv === "j@mesperona.com" || response.vu.jv === "jimaperona@gmail.com") {
+        console.log(response);
+        if(response.su.ev === "j@mesperona.com" || response.vu.jv === "jimaperona@gmail.com") {
           alert("Authentication Successful");
           this.setState({isAuth: true});
           this.state.unsubFromGamelist();
