@@ -63,7 +63,7 @@ export default class Basketball extends Component {
           [{name: "Seneca"}, {name: "B. Roe", number: 3}, {name: "C. O'boyle", number: 4}, {name: "A. Stiegler", number: 5}, {name: "G. Siegel", number: 10}, {name: "T. Cahill", number: 11}, {name: "C. Underhill", number: 12}, {name: "N. Quigley", number: 14}, {name: "B. Krause", number: 20}, {name: "T. Hauch", number: 21}, {name: "T. Van Ness", number: 22}, {name: "C. Carey", number: 23}, {name: "C. Hauch", number: 24}, {name: "T. Thorsen", number: 35},],
           [{name: "SBA Girls (Varsity)"}, {name: "Teghan Tillman", number: 4}, {name: "Payton Giordano", number: 5}, {name: "Erin Gray", number: 11}, {name: "Grace Maschmann",  number: 12}, {name: "Leah Smudzinski", number: 13}, {name: "Mia Waters", number: 20}, {name: "Lia Bosnich", number: 21}, {name: "Abbie George", number: 23}, {name: "Renn Ludford", number: 24}, {name: "Miranda Mazzorana", number: 33}, {name: "Ryann Stoudt", number: 34}, {name: "Rylee McGunnigal", number: 40}, {name: "Jaden Hart", number: 44}],
           [{name: "Seneca Girls (Varsity)"}, {name: "Cassidy Draves", number: 2}, {name: "Lauren Silvola", number: 3}, {name: "Ella Gilbertson", number: 4}, {name: "Kloey Lind", number: 5}, {name: "Brooklyn Giertz", number: 10}, {name: "Addison Olson", number: 11}, {name: "Brooke Roseland", number: 12}, {name: "Madison Bromberek", number: 13}, {name: "Mara Bruno", number: 14}, {name: "Arberita Jashari", number: 15}, {name: "Emma Smith", number: 20}, {name: "Carly Greve", number: 21}, {name: "Marie Chesharek", number: 23}, {name: "Kennedy Hartwig", number: 24}, {name: "Allie Arwood", number: 30}],
-          [{name: "Mendota"}, {name: "Emiliano Arteaga", number: 1}, {name: "Chris Sandoval", number: 2}, {name: "Gavin Glazebrook", number: 3}, {name: "Jae Shaun Hughes", number: 5}, {name: "Abraham Guzman", number: 10}, {name: "Cole Stremlau", number: 11}, {name: "Josue Arteaga", number: 14}, {name: "Krew Bond", number: 15}, {name: "Trent Stamberger", number: 24}, {name: "Alexis Quintana", number: 33}, {name: "Mauricio Escatel", number: 35}, {name: "Aaron Schmidt", number: 44}, {name: "Rafa Romero", number: 45}],
+          [{name: "Mendota"}, {name: "Krew Bond", number: 1}, {name: "Damien Magallanes", number: 2}, {name: "Rafael Romero", number: 3}, {name: "Izaiah Nañez", number: 4}, {name: "Ted Landgraf", number: 5}, {name: "Josue Arteaga", number: 10}, {name: "Trent Stamberger", number: 11}, {name: "Dom Stamberger", number: 12}, {name: "Ryne Strouss", number: 13}, {name: "Ricky Orozco", number: 14}, {name: "Sergio Sandoval", number: 24}, {name: "Sean Figueroa", number: 44}, {name: "Nick Rosales", number: 45}],
           [{name: "DePue Girls"}, {name: "Julie Perez", number: 1}, {name: "Jasmine Rosales", number: 10}, {name: "Azucena Villagomez", number: 11}, {name: "Pamela Mejia", number: 12}, {name: "Lupita Hurtado", number: 14}, {name: "Summer Hayes", number: 21}, {name: "Maggie Gavina", number: 22}, {name: "Emily Marquez", number: 33}, {name: "Amy Munoz", number: 35}],
           [{name: "LaSalle-Peru"}, {name: "John Riva", number: 1}, {name: "Jack Scheri", number: 2}, {name: "Michael Jereb", number: 3}, {name: "Hunter Larson", number: 4}, {name: "Trenton Hancock", number: 5}, {name: "Alex Lenkaitis", number: 12}, {name: "Alex Newman", number: 14}, {name: "Tyler Hartman", number: 20}, {name: "Jarrett Skinner", number: 21}, {name: "Brayden Porter", number: 22}, {name: "Drake Weber", number: 23}, {name: "Nick Kreiser", number: 30}, {name: "Latrell Coulter", number: 35}],
           [{name: "Princeton Girls"}, {name: "Savanna Birkey", number: 4}, {name: "Olivia Gartin", number: 11}, {name: "Emma Wittig", number: 12}, {name: "Isa Ibarra", number: 15}, {name: "Maggie Davis", number: 20}, {name: "Mariah Hobson", number: 22}, {name: "Ana Mallery-Sondgeroth", number: 23}, {name: "Erin May", number: 24}, {name: "Brynn Hieronymus", number: 32}, {name: "Gracie Reynolds", number: 33}, {name: "Grace May", number: 35}, {name: "McKenzie Hecht", number: 40}, {name: "Taylor Quiram", number: 42}, {name: "Morgan Coleman", number: 44}, {name: "Erika Sorenson", number: 45}],
@@ -265,12 +265,14 @@ export default class Basketball extends Component {
                   );
                 }
               })()}
-              
-              <GoogleLogin clientId="132558249658-kt77ea389dsq23bmopt998l53ed6rlni.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={(response) => this.responseGoogle(response)}
-                    onFailure={(response) => this.responseGoogle(response)}
-                    cookiePolicy={'single_host_origin'}/>
+              <div className="LoginZone">
+                <GoogleLogin clientId="132558249658-kt77ea389dsq23bmopt998l53ed6rlni.apps.googleusercontent.com"
+                      buttonText="Login"
+                      onSuccess={(response) => this.responseGoogle(response)}
+                      onFailure={(response) => this.responseGoogle(response)}
+                      cookiePolicy={'single_host_origin'}/>
+                <div className="LoginWarning">Google Login only needed for admin users.</div>
+              </div>
             </div>
             
         );
