@@ -12,7 +12,8 @@ export default class Player extends Component {
         ftmisses: 0,
         fttotal: 0,
         percentage: 0,
-        personalScore: 0
+        personalScore: 0,
+        subtract: this.props.subtract
     }
     render() {
         return(
@@ -49,18 +50,26 @@ export default class Player extends Component {
         this.setState(this.props.initial || {});
     }
 
+    static getDerivedStateFromProps = (nextProps, prevState) => {
+        return({subtract: nextProps.subtract})
+    }
+
     incrementFTMakes = (sign, event) => {
         const{
             total,
             ftmakes,
             personalScore,
-            fttotal
+            fttotal,
+            subtract
         } = this.state;
 
         if (!this.props.controller) {
             return;
         }
 
+        if (subtract === "Subtract") {
+            sign = -1;
+        }
         event.preventDefault();
 
         if (sign === -1 && ftmakes === 0) {
@@ -90,11 +99,15 @@ export default class Player extends Component {
             total,
             ftmakes,
             ftmisses,
-            fttotal
+            fttotal,
+            subtract
         } = this.state;
 
         if (!this.props.controller) {
             return;
+        }
+        if (subtract === "Subtract") {
+            sign = -1;
         }
         
         event.preventDefault();
@@ -119,11 +132,15 @@ export default class Player extends Component {
         const{
             total,
             twomakes,
-            personalScore
+            personalScore,
+            subtract
         } = this.state;
 
         if (!this.props.controller) {
             return;
+        }
+        if (subtract === "Subtract") {
+            sign = -1;
         }
 
         event.preventDefault();
@@ -152,11 +169,15 @@ export default class Player extends Component {
         const{
             total,
             threemakes,
-            personalScore
+            personalScore,
+            subtract
         } = this.state;
 
         if (!this.props.controller) {
             return;
+        }
+        if (subtract === "Subtract") {
+            sign = -1;
         }
 
         event.preventDefault();

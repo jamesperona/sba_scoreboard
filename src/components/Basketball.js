@@ -27,6 +27,7 @@ export default class Basketball extends Component {
     state = {
         unsubFromGamelist : function() {return;},
         unsubFromLivegame : function() {return;},
+        subtract : "Add",
         isAuth : false,
         homeScore : 0,
         awayScore : 0,
@@ -138,7 +139,7 @@ export default class Basketball extends Component {
                         {
                           homeTeam.map((player, idx) => {
                             return (
-                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={true} subtract={this.state.subtract} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, true, new_data)}></Player>
                             )
                           })
                         }
@@ -176,7 +177,7 @@ export default class Basketball extends Component {
                         {
                           awayTeam.map((player, idx) => {
                             return (
-                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
+                              <Player key = {player.name+Object.entries(player.data || {data: "empty"}).reduce((prev, new_) => prev + "" + new_[1])} initial = {player.data} name={player.name} number={player.number} homeUp={this.incrementHome} awayUp={this.incrementAway} totalUp={this.incrementTeamTotals} home={false} subtract={this.state.subtract} controller={isAuth} callback = {(new_data) => this.callbackUpdate(idx, false, new_data)}></Player>
                             )
                           })
                         }
@@ -217,7 +218,11 @@ export default class Basketball extends Component {
                             }
                           </select>
                         </div>
-    
+
+                        <div>
+                          <button onClick={() => this.subtractToggle()}>{this.state.subtract}</button>
+                        </div>
+
                         <div>
                           Away Team: &nbsp;
                           <select defaultValue='default' id={"awayInput"} onChange={(event) => this.updateTeams(false)}>
@@ -322,6 +327,7 @@ export default class Basketball extends Component {
         delete state_copy.quarterData;
         delete state_copy.unsubFromLivegame;
         delete state_copy.unsubFromGamelist;
+        delete state_copy.subtract;
         // console.log(current_game_id);
         // console.log(state_copy);
 
@@ -427,6 +433,13 @@ export default class Basketball extends Component {
         // }  
       }
     
+      subtractToggle = () => {
+        if (this.state.subtract === "Subtract") {
+          this.setState({subtract: "Add"});
+        } else {
+          this.setState({subtract: "Subtract"});
+        }
+      }
     
       //TODO: im aware of a bug where if you advance the quarter, add points, backtrack the quarter, and then advance once more, the data dump handles it as if the point was scored within the quarter you backtracked to
       //fixable, but annoying
@@ -434,6 +447,9 @@ export default class Basketball extends Component {
         const {isAuth, quarter, outData, homeName, homeScore, awayName, awayScore, quarterCurrent, quarterData} = this.state;
         if (!isAuth) {
           return;
+        }
+        if (this.state.subtract === "Subtract") {
+          positive = false;
         }
         let stateQArr = this.state.quarterData;
         const quarterArr = ["1st", "2nd", "3rd", "4th", "Final"];
