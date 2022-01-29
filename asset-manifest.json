@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/sba_scoreboard/static/css/main.dff38817.chunk.css",
-    "main.js": "/sba_scoreboard/static/js/main.66fa6020.chunk.js",
-    "main.js.map": "/sba_scoreboard/static/js/main.66fa6020.chunk.js.map",
+    "main.js": "/sba_scoreboard/static/js/main.2e789f4b.chunk.js",
+    "main.js.map": "/sba_scoreboard/static/js/main.2e789f4b.chunk.js.map",
     "runtime-main.js": "/sba_scoreboard/static/js/runtime-main.b753f834.js",
     "runtime-main.js.map": "/sba_scoreboard/static/js/runtime-main.b753f834.js.map",
     "static/js/2.278fb2d2.chunk.js": "/sba_scoreboard/static/js/2.278fb2d2.chunk.js",
     "static/js/2.278fb2d2.chunk.js.map": "/sba_scoreboard/static/js/2.278fb2d2.chunk.js.map",
     "index.html": "/sba_scoreboard/index.html",
-    "precache-manifest.cade0bcbf50bba0f12a07953f855d223.js": "/sba_scoreboard/precache-manifest.cade0bcbf50bba0f12a07953f855d223.js",
+    "precache-manifest.2dfd4c5d2439e812f138c8a3d3de2536.js": "/sba_scoreboard/precache-manifest.2dfd4c5d2439e812f138c8a3d3de2536.js",
     "service-worker.js": "/sba_scoreboard/service-worker.js",
     "static/css/main.dff38817.chunk.css.map": "/sba_scoreboard/static/css/main.dff38817.chunk.css.map",
     "static/js/2.278fb2d2.chunk.js.LICENSE.txt": "/sba_scoreboard/static/js/2.278fb2d2.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.b753f834.js",
     "static/js/2.278fb2d2.chunk.js",
     "static/css/main.dff38817.chunk.css",
-    "static/js/main.66fa6020.chunk.js"
+    "static/js/main.2e789f4b.chunk.js"
   ]
 }
